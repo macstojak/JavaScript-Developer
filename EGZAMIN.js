@@ -95,205 +95,206 @@
 // --------------------------------------------------------------
 // --------------------------------------------------------------
 
-function Card(colour, value) {
-  this.colour = colour;
-  this.value = value;
-}
+// function Card(colour, value) {
+//   this.colour = colour;
+//   this.value = value;
+// }
 
-// Talia kart (pola koloru i figury)
-function Deck(){
+// // Talia kart (pola koloru i figury)
+// function Deck(){
   
   
-    this.colours = ["clubs", "diamonds", "hearts", "spades"];
-    this.values = [2,3,4,5,6,7,8,9,10,11,12,13,14];
-  }
+//     this.colours = ["clubs", "diamonds", "hearts", "spades"];
+//     this.values = [2,3,4,5,6,7,8,9,10,11,12,13,14];
+//     this.deck=[];
+//   }
 
-// Metoda assignValues przypisująca wszystkie kombinacje kolorów
-// i figur czyli zwyczajnie cała talia kart
-  Deck.prototype.assignValues = function(){
-    let deck = [];
-  
-    this.colours.forEach(c=>{
-      this.values.forEach(v=>{
-        deck.push({
-          colour: c,
-          value: v
-        })
-      })
-    })
-   return deck;
-  }
+// // Metoda assignValues przypisująca wszystkie kombinacje kolorów
+// // i figur czyli zwyczajnie cała talia kart
+//   Deck.prototype.assignValues = function(){
+//     let deck = [];
+//     this.colours.forEach(c=>{
+//       this.values.forEach(v=>{
+//         deck.push({
+//           colour: c,
+//           value: v
+//         })
+//       })
+//     })
+//    this.deck=deck;
+//   }
 
-// Rozdanie kart 
-  Deck.prototype.dealOut = function(deck){
-    let hand = [];
-  
+// // Rozdanie kart 
+//   Deck.prototype.dealOut = function(){
+//     let hand = [];
+//     let deck = this.deck;
+
+//     for(let i=0; i<5; i++){
+//       let randomIndex = Math.floor(Math.random()*(deck.length-1)); 
+//       hand.push(deck[randomIndex]);
+//       deck.splice(randomIndex,1);
     
-    for(let i=0; i<5; i++){
-      let randomIndex = Math.floor(Math.random()*51); 
-      hand.push(deck[randomIndex]);
-      deck.splice(randomIndex,1);
-    }
-    return hand;
-  }
+//     }
+//     console.log(hand.length)
+//     return hand;
+//   }
 
-  // Losowanie karty 
-  function Card(colours, values){
-    let colour = colours[Math.floor(Math.random()*4)]
-    let value = values[Math.floor(Math.random()*14)]
-    this.card = {
-      colour: colour,
-      value: value
-    }
-    return this.card;
-  }
+//   // Losowanie karty 
+//   function Card(colours, values){
+//     let colour = colours[Math.floor(Math.random()*4)]
+//     let value = values[Math.floor(Math.random()*14)]
+//     this.card = {
+//       colour: colour,
+//       value: value
+//     }
+//     return this.card;
+//   }
 
-  // Ręka
-  function Hand(){
-      this.hand = [];
-  }
+//   // Ręka
+//   function Hand(){
+//       this.hand = [];
+//   }
 
-  Hand.prototype.holdCards = function(cards){
-      this.hand = cards;
-  }
-  // Funkcja do sortowania od najwyższej do najniższej - porównywanie dwóch wartości
-  function compare(a, b) {
-      if (a.value < b.value) {
-        return 1;
-      }
-      if (a.value > b.value) {
-        return -1;
-      }
-      return 0;
-    }
+//   Hand.prototype.holdCards = function(cards){
+//       this.hand = cards;
+//   }
+//   // Funkcja do sortowania od najwyższej do najniższej - porównywanie dwóch wartości
+//   function compare(a, b) {
+//       if (a.value < b.value) {
+//         return 1;
+//       }
+//       if (a.value > b.value) {
+//         return -1;
+//       }
+//       return 0;
+//     }
  
-// Sprawdzenie jakie rozdanie ma gracz
-function checkTheSet(set){
-    let msg ="";
-    let highestFigure = set[0].value;
-    let straightFlush = true;
-    let strit = true;
-    let flush = true;
-    let royalFlush = true;
-    let tripleCount = 0;
-    let pairCount = 0;
+// // Sprawdzenie jakie rozdanie ma gracz
+// function checkTheSet(set){
+//     let msg ="";
+//     let highestFigure;
+//     let straightFlush = true;
+//     let strit = true;
+//     let flush = true;
+//     let royalFlush = false;
+//     let tripleCount = 0;
+//     let pairCount = 0;
 
-//Poukładaj po kolei karty w talii wg ich wartości
-    set.sort(compare)    
-  
+// // Poukładaj po kolei karty w talii wg ich wartości
+//     set.sort(compare)    
+//   console.log("Uporządkowane karty:", JSON.stringify(set))
+// highestFigure= set[0].value;
+// // TU sprawdzamy, czy:
+// // zestaw ma taki sam kolor (Flush), 
+// // czy karty są narastające (Strit), 
+// // albo czy zaistniały oba warunki (Straight flush)
 
-//TU sprawdzamy, czy:
-// zestaw ma taki sam kolor (Flush), 
-// czy karty są narastające (Strit), 
-// albo czy zaistniały oba warunki (Straight flush)
+//     for(let i =0; i<set.length-1; i++){
+//         let notSameColour = (set[i].colour !== set[i+1].colour);
+//         let notSameValue = ((set[i+ 1].value + 1 ) !== set[i].value );
+//             if(!notSameValue && set[0]===14){
+//                 royalFlush = true;
+//             }
+//             if (notSameValue || notSameColour) {
+//                 straightFlush = false;
+//             } 
+//             if(notSameValue){
+//                 strit=false;
+//             }
+//             if(notSameColour){
+//                 flush=false;
+//             }
+//     }
+// // Wypisanie pasujących układów
+//     if(royalFlush === true){console.log("1. Royal Flush")}
+//     if(straightFlush === true){console.log("2.Straight flush")};
+//     if(flush === true) {console.log("5. Flush")}
+//     if(strit===true){console.log("6. Strit")}
 
-    for(let i =0; i<set.length-1; i++){
-        let notSameColour = (set[i].colour !== set[i+1].colour);
-        let notSameValue = ((set[i+ 1].value + 1 ) !== set[i].value );
-            if(notSameValue && set[0]<14){
-                royalFlush = false;
-            }
-            if (notSameValue || notSameColour) {
-                straightFlush = false;
-            } 
-            if(notSameValue){
-                strit=false;
-            }
-            if(notSameColour){
-                flush=false;
-            }
-    }
-// Wypisanie pasujących układów
-    if(royalFlush === true){console.log("1. Royal Flush")}
-    if(straightFlush === true){console.log("2.Straight flush")};
-    if(flush === true) {console.log("5. Flush")}
-    if(strit===true){console.log("6. Strit")}
+// // Filtrowanie powtarzających się figur
+//    let figureFilter = set.filter((c, index)=>{
+//      return(
+//        (index===set.findIndex(obj=>{
+//          return obj.value===c.value;
+//        }))
+//      )
+//    })
 
-// Filtrowanie powtarzających się figur
-   let figureFilter = set.filter((c, index)=>{
-     return(
-       (index===set.findIndex(obj=>{
-         return obj.value===c.value;
-       }))
-     )
-   })
-
-// Redukcja do tablicy powtarzających się figur [{figura: , ilość wystąpień:}]
-   let listOfFigurePairs = figureFilter.map(el => {
-     let value = el.value;
-     let count = 0;
+// // Redukcja do tablicy powtarzających się figur [{figura: , ilość wystąpień:}]
+//    let listOfFigurePairs = figureFilter.map(el => {
+//      let value = el.value;
+//      let count = 0;
     
-        set.map(h => {
-          if (el.value === h.value) {
-            count += 1;
-          }
-        });
-        return {value: value, count: count}
-      });
+//         set.map(h => {
+//           if (el.value === h.value) {
+//             count += 1;
+//           }
+//         });
+//         return {value: value, count: count}
+//       });
 
-// Funkcja do sprawdzenia czy jest następna para albo trójka i złączenia tekstów.
-  function checkForNextString(){
-    if(msg.length>0)
-    msg=msg.concat(", ");
-  }     
+// // Funkcja do sprawdzenia czy jest następna para albo trójka i złączenia tekstów.
+//   function checkForNextString(){
+//     if(msg.length>0)
+//     msg=msg.concat(", ");
+//   }     
 
-// Sprawdzenie czy są pary, trójki albo czwórka
-  listOfFigurePairs.map(el=>{
-   switch(el.count){
-     case 2:
-       checkForNextString()
-       msg = msg.concat("9. Pair of "+el.value);
-       pairCount++;
-       break;
-    case 3:
-      checkForNextString()
-      msg = msg.concat("8. A triple of "+el.value);
-      tripleCount++;
-      break;
-    case 4:
-      checkForNextString()
-      msg = msg.concat("3. Four of a kind: "+ el.value);
-      break;
-   }
+// // Sprawdzenie czy są pary, trójki albo czwórka
+//   listOfFigurePairs.map(el=>{
+//    switch(el.count){
+//      case 2:
+//        checkForNextString()
+//        msg = msg.concat("9. Pair of "+el.value);
+//        pairCount++;
+//        break;
+//     case 3:
+//       checkForNextString()
+//       msg = msg.concat("8. A triple of "+el.value);
+//       tripleCount++;
+//       break;
+//     case 4:
+//       checkForNextString()
+//       msg = msg.concat("3. Four of a kind: "+ el.value);
+//       break;
+//    }
    
-  })
+//   })
 
-  //Sprawdzanie czy jest FULL HOUSE albo dwie pary
-    if(pairCount ===1 && tripleCount ===1){
-        console.log("4. Full house")
-    }else if(pairCount === 2){
-        console.log("7. Two pairs")
-    }
-    console.log("10. Highest figure:", highestFigure)
-// Wywołanie komunikatu o dwójkach, trójkach i czwórkach.
-    console.log(msg)
-  }
+//   //Sprawdzanie czy jest FULL HOUSE albo dwie pary
+//     if(pairCount ===1 && tripleCount ===1){
+//         console.log("4. Full house")
+//     }else if(pairCount === 2){
+//         console.log("7. Two pairs")
+//     }
+//     console.log("10. Highest figure:", highestFigure)
+// // Wywołanie komunikatu o dwójkach, trójkach i czwórkach.
+//     console.log(msg)
+//   }
   
 
-  // TESTOWANIE POSZCZEGÓLNYCH UKŁADÓW
-  let setRoyalFlush = [{"colour": "hearts", "value": 14},{"colour": "hearts", "value": 13},{"colour": "hearts", "value": 12},{"colour": "hearts", "value": 11}, {"colour": "hearts", "value": 10}]
-  let setStraightFlush =[{"colour": "hearts", "value": 9},{"colour": "hearts", "value": 8},{"colour": "hearts", "value": 7}, {"colour": "hearts", "value": 6},{"colour": "hearts", "value": 5}]
-  let setFourOfAKind = [{"colour": "hearts", "value": 14},{"colour": "spades", "value": 14},{"colour": "clubs", "value": 14}, {"colour": "diamonds", "value": 14},{"colour": "hearts", "value": 5}];
-  let setFullHouse=[{"colour": "hearts", "value": 14},{"colour": "spades", "value": 14},{"colour": "clubs", "value": 14}, {"colour": "hearts", "value": 13},{"colour": "spades", "value": 13}];
-  let setFlush = [{"colour": "hearts", "value": 14},{"colour": "hearts", "value": 12},{"colour": "hearts", "value": 7}, {"colour": "hearts", "value": 6},{"colour": "hearts", "value": 5}];
-  let setStrit = [{"colour": "hearts", "value": 9},{"colour": "diamonds", "value": 8},{"colour": "clubs", "value": 7}, {"colour": "spades", "value": 6},{"colour": "hearts", "value": 5}]
-  let setThreeOfAKind = [{"colour": "hearts", "value": 9},{"colour": "spades", "value": 9},{"colour": "diamonds", "value": 9}, {"colour": "spades", "value": 2},{"colour": "diamonds", "value": 1}] 
-  let setTwoPairs = [{"colour": "hearts", "value": 9},{"colour": "spades", "value": 9},{"colour": "diamonds", "value": 7}, {"colour": "spades", "value": 7},{"colour": "diamonds", "value": 1}] 
-  let setOnePair = [{"colour": "hearts", "value": 9},{"colour": "spades", "value": 9},{"colour": "diamonds", "value": 7}, {"colour": "spades", "value": 5},{"colour": "diamonds", "value": 1}] 
-  let setHighCard = [{"colour": "hearts", "value": 12},{"colour": "spades", "value": 3},{"colour": "diamonds", "value": 7}, {"colour": "spades", "value": 5},{"colour": "diamonds", "value": 1}] 
+//   // TESTOWANIE POSZCZEGÓLNYCH UKŁADÓW
+//   let setRoyalFlush = [{"colour": "hearts", "value": 14},{"colour": "hearts", "value": 13},{"colour": "hearts", "value": 12},{"colour": "hearts", "value": 11}, {"colour": "hearts", "value": 10}]
+//   let setStraightFlush =[{"colour": "hearts", "value": 9},{"colour": "hearts", "value": 8},{"colour": "hearts", "value": 7}, {"colour": "hearts", "value": 6},{"colour": "hearts", "value": 5}]
+//   let setFourOfAKind = [{"colour": "hearts", "value": 14},{"colour": "spades", "value": 14},{"colour": "clubs", "value": 14}, {"colour": "diamonds", "value": 14},{"colour": "hearts", "value": 5}];
+//   let setFullHouse=[{"colour": "hearts", "value": 14},{"colour": "spades", "value": 14},{"colour": "clubs", "value": 14}, {"colour": "hearts", "value": 13},{"colour": "spades", "value": 13}];
+//   let setFlush = [{"colour": "hearts", "value": 14},{"colour": "hearts", "value": 12},{"colour": "hearts", "value": 7}, {"colour": "hearts", "value": 6},{"colour": "hearts", "value": 5}];
+//   let setStrit = [{"colour": "hearts", "value": 9},{"colour": "diamonds", "value": 8},{"colour": "clubs", "value": 7}, {"colour": "spades", "value": 6},{"colour": "hearts", "value": 5}]
+//   let setThreeOfAKind = [{"colour": "hearts", "value": 9},{"colour": "spades", "value": 9},{"colour": "diamonds", "value": 9}, {"colour": "spades", "value": 2},{"colour": "diamonds", "value": 1}] 
+//   let setTwoPairs = [{"colour": "hearts", "value": 9},{"colour": "spades", "value": 9},{"colour": "diamonds", "value": 7}, {"colour": "spades", "value": 7},{"colour": "diamonds", "value": 1}] 
+//   let setOnePair = [{"colour": "hearts", "value": 9},{"colour": "spades", "value": 9},{"colour": "diamonds", "value": 7}, {"colour": "spades", "value": 5},{"colour": "diamonds", "value": 1}] 
+//   let setHighCard = [{"colour": "hearts", "value": 12},{"colour": "spades", "value": 3},{"colour": "diamonds", "value": 7}, {"colour": "spades", "value": 5},{"colour": "diamonds", "value": 1}] 
+ 
+//   //POWOŁANIE INSTANCJI KLAS DECK i losowanie kart
+//   let colours = ["clubs", "diamonds", "hearts", "spades"];
+//   let values=[2,3,4,5,6,7,8,9,10,11,12,13,14];
+//   let deck = new Deck();
+//   deck.assignValues()
+//   let fullHand = deck.dealOut();
+
+//   console.log("Oto wylosowane karty:", JSON.stringify(fullHand))
+//   checkTheSet(fullHand);
   
-//   console.log("Hand you drew:",JSON.stringify(hand))
-  // royalFlush(setRoyalFlush);
 
-  //POWOŁANIE INSTANCJI KLAS DECK i losowanie kart
-  let colours = ["clubs", "diamonds", "hearts", "spades"];
-  let values=[2,3,4,5,6,7,8,9,10,11,12,13,14];
-  let deck = new Deck();
-  let hand = deck.assignValues()
-  let fullHand = hand.dealOut();
-
-  console.log("Oto wylosowane karty:", JSON.stringify(fullHand))
-  checkTheSet(fullHand);
   
 
 // --------------------------------------------------------------
